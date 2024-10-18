@@ -34,9 +34,11 @@ namespace eTickets.Data.Services
             return result;
         }
 
-        public Actor Update(int id, Actor actor)
+        public async Task<Actor> UpdateAsync(int id, Actor actor)
         {
-            throw new NotImplementedException();
+            _context.Update(actor);
+            await _context.SaveChangesAsync();
+            return actor;
         }
     }
 }
