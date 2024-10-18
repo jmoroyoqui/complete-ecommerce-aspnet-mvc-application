@@ -18,7 +18,7 @@ namespace eTickets.Controllers
             var data = await _service.GetAllAsync();
             return View(data);
         }
-
+        #region Create Actor
         public IActionResult Create()
         {
             return View();
@@ -34,7 +34,9 @@ namespace eTickets.Controllers
             await _service.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Actor Details
         //GET: Actors/Details/ID
         public async Task<IActionResult> Details(int id)
         {
@@ -42,19 +44,41 @@ namespace eTickets.Controllers
             if (actorDetails == null) return View("Not Found");
             return View(actorDetails);
         }
+        #endregion
 
+        #region Edit Actor
         public async Task<IActionResult> Edit(int id)
         {
             var actor = await _service.GetByIdAsync(id);
             if (actor == null) return View("Not Found");
             return View(actor);
         }
-
-        public async Task<IActionResult> Update(int id, [Bind("Id,FullName,ProfilePictureURL,Bio")]Actor actor)
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,ProfilePictureURL,Bio")]Actor actor)
         {
             if (!ModelState.IsValid) return View(actor);
             await _service.UpdateAsync(id, actor);
             return RedirectToAction(nameof(Index));
         }
+        #endregion
+
+        #region Delete Actor
+        public async Task<IActionResult> Delete(int id)
+        {
+            var actor = await _service.GetByIdAsync(id);
+            if (actor == null) return View("Not Found");
+            return View(actor);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var actor = await _service.GetByIdAsync(id);
+            if (actor == null) return View("Not Found");
+
+            await _service.DeleteAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }
