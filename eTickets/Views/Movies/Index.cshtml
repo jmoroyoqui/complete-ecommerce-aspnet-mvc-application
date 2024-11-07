@@ -23,7 +23,7 @@
                                     {
                                         @item.Name
                                     }
-                                    <a class="text-white float-sm-end"><i class="bi bi-pencil-square"></i></a>
+                                    <a class="text-white float-sm-end" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
                                 </h5>
                             </p>
                         </div>
@@ -64,7 +64,8 @@
                     <div class="col-md-12">
                         <div class="card-footer">
                             <p class="card-text">
-                                <a class="btn btn-outline-primary float-right"><i class="bi bi-eye-fill"></i>&nbsp;Show Details</a>
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"></i>&nbsp;Show Details</a>
                                 <a class="btn btn-success text-white"><i class="bi bi-cart-plus"></i>&nbsp;Add to Cart (Price @item.Price.ToString("c"))</a>
                             </p>
                         </div>
@@ -74,3 +75,5 @@
         </div>
     }
 </div>
+
+@await Html.PartialAsync("_CreateItem", "Movies")
