@@ -20,6 +20,7 @@ builder.Services.AddSession();
 
 var app = builder.Build();
 AppDbInitializer.Seed(app);
+AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
