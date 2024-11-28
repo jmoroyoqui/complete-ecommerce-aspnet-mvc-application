@@ -70,6 +70,7 @@
 @section Scripts{
     <script src="https://www.paypalobjects.com/api/checkout.js"></script>
     <script>
+        let _total = @Html.Raw(@Model.ShoppingCartTotal);
         paypal.Button.render({
             //
             env: 'sandbox',
@@ -88,7 +89,16 @@
 
             //payment
             payment: function (data, actions) {
-                console.log("payment set up");
+                return actions.payment.create({
+                    transactions: [
+                        {
+                            amount: {
+                                total: _total,
+                                currency: 'USD'
+                            }
+                        }
+                    ]
+                });
             },
 
             //execute payment
